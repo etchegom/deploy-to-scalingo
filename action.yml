@@ -11,6 +11,10 @@ inputs:
     description: "host to add to known_hosts file"
     required: true
     default: ssh.osc-fr1.scalingo.com
+  branch-name:
+    description: "branch to deploy"
+    required: false
+    default: master
 
 runs:
   using: "composite"
@@ -28,8 +32,8 @@ runs:
         git config --add --local core.sshCommand 'ssh -i /home/runner/.ssh/id_rsa'
         git remote add production git@${{ inputs.known-host }}:${{ inputs.app-name }}.git
         git fetch --unshallow
-        git push --force production HEAD:master
-        if [ "$(git rev-parse production/master)" != "$(git rev-parse HEAD)" ]; then
+        git push --force production HEAD:{{ inputs.branch-name }}
+        if [ "$(git rev-parse production/{{ inputs.branch-name }})" != "$(git rev-parse HEAD)" ]; then
           echo "Failed to push to Scalingo"
           exit 1
         fi

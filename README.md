@@ -33,6 +33,7 @@ Name it explicitely, for example SSH_PRIVATE_KEY and copy the private key conten
 - ssh-private-key : required, you need to set it to the github secret related to your SSH_PRIVATE_KEY
 - app-name: required, name of your scalingo app
 - known-host : optional, default is ssh.osc-fr1.scalingo.com
+- branch-name: optional, default is master
 
 app-name and known_host are used to build the scalingo git repo using
 
@@ -51,4 +52,5 @@ steps:
       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       app-name: app-name
       known-host: ssh.osc-fr1.scalingo.com
+      branch-name: main
 ```
